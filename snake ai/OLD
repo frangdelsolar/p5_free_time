@@ -1,0 +1,215 @@
+
+    distAhead(){
+
+        for (let piece of this.tail) {
+            if (this.ySpeed == -1 && this.c == piece[1] && piece[0] < this.r){
+                return (piece[0]-this.r)/ROWS;
+            } else if (this.ySpeed == 1 && this.c == piece[1] && piece[0] > this.r){
+                return (piece[0]-this.r)/ROWS;
+            } else if (this.xSpeed == -1 && this.r == piece[0] && piece[1] < this.c){
+                return (piece[1]-this.c)/COLS;
+            } else if (this.xSpeed == 1 && this.r == piece[0] && piece[1] > this.c){
+                return (piece[1]-this.c)/COLS;
+            }          
+        }
+
+        if (this.ySpeed == -1){
+            return (this.r - 0)/ROWS;
+        } else if (this.ySpeed == 1){
+            return (ROWS - this.r)/ROWS;
+        } else if (this.xSpeed == -1){
+            return (this.c)/COLS;
+        } else if (this.xSpeed == 1){
+            return (COLS-this.c)/COLS;
+        } 
+       
+    }
+
+    distRight(){
+        for (let piece of this.tail) {
+            if (this.ySpeed == -1 && this.r == piece[0] && piece[1] > this.c){
+                return (piece[1]-this.c)/COLS;
+            } else if (this.ySpeed == 1 && this.r == piece[0] && piece[1] < this.c){
+                return (piece[1]-this.c)/COLS;
+            } else if (this.xSpeed == -1 && this.c == piece[1] && piece[0] < this.r){
+                return (piece[0]-this.r)/ROWS;
+            } else if (this.xSpeed == 1 && this.c == piece[1] && piece[0] > this.r){
+                return (piece[0]-this.r)/ROWS;
+            }             
+        }
+
+        if (this.ySpeed == -1){
+            return (COLS - this.c)/COLS;
+        } else if (this.ySpeed == 1){
+            return (this.c)/COLS;
+        } else if (this.xSpeed == -1){
+            return (this.r)/ROWS;
+        } else if (this.xSpeed == 1){
+            return (ROWS-this.r)/ROWS;
+        } 
+
+    }
+
+    distLeft(){
+        for (let piece of this.tail) {
+            if (this.ySpeed == -1 && this.r == piece[0] && piece[1] < this.c){
+                return (piece[1]-this.c)/COLS;
+            } else if (this.ySpeed == 1 && this.r == piece[0] && piece[1] > this.c){
+                return (piece[1]-this.c)/COLS;
+            } else if (this.xSpeed == -1 && this.c == piece[1] && piece[0] < this.r){
+                return (piece[0]-this.r)/ROWS;
+            } else if (this.xSpeed == 1 && this.c == piece[1] && piece[0] > this.r){
+                return (piece[0]-this.r)/ROWS;
+            }             
+        }
+
+        if (this.ySpeed == -1){
+            return (this.c)/COLS;
+        } else if (this.ySpeed == 1){
+            return (COLS - this.c)/COLS;
+        } else if (this.xSpeed == -1){
+            return (ROWS-this.r)/ROWS;
+        } else if (this.xSpeed == 1){
+            return ((this.r)/ROWS);
+        } 
+    }
+
+    foodAhead(){
+        let food = this.board.food;
+
+        if (this.ySpeed == -1 && food.c == this.c){
+            return (this.r - food.r)/ROWS;
+        } else if (this.ySpeed == 1 && food.c == this.c){
+            return (food.r - this.r)/ROWS;
+        } else if (this.xSpeed == -1 && food.r == this.r){
+            return (this.c - food.c)/COLS;
+        } else if (this.xSpeed == 1 && food.r == this.r){
+            return (food.c - this.c)/COLS;
+        } else {
+            return -1;
+        }       
+    }
+
+    foodRight(){
+        let food = this.board.food;
+
+        if (this.ySpeed == -1 && food.c > this.c){
+            return (food.c - this.c)/COLS;
+        } else if (this.ySpeed == 1 && food.c < this.c){
+            return (this.c - food.c)/COLS;
+        } else if (this.xSpeed == -1 && food.r < this.r){
+            return (this.r - food.r)/ROWS;
+        } else if (this.xSpeed == 1 && food.r > this.r){
+            return (food.r - this.r)/ROWS;
+        } else {
+            return -1;
+        }       
+    }
+
+    foodLeft(){
+        let food = this.board.food;
+
+        if (this.ySpeed == -1 && food.c < this.c){
+            return (this.c - food.c)/COLS;
+        } else if (this.ySpeed == 1 && food.c > this.c){
+            return (food.c - this.c)/COLS;
+        } else if (this.xSpeed == -1 && food.r > this.r){
+            return (food.r - this.r)/ROWS;
+        } else if (this.xSpeed == 1 && food.r < this.r){
+            return (this.r - food.r)/ROWS;
+        } else {
+            return -1;
+        }               
+    }
+
+
+
+
+
+    busyAhead(){
+        if ( (this.ySpeed == -1 && this.r+this.ySpeed < 0) ||
+             (this.ySpeed == 1 && this.r+this.ySpeed >= ROWS) ||
+             (this.xSpeed == -1 && this.c+this.xSpeed < 0) ||
+             (this.xSpeed == 1 && this.c+this.xSpeed >= COLS) ){
+            return 1;
+        }
+
+        for (let piece of this.tail) {
+            if ( (this.ySpeed == -1 && this.c == piece[1] && this.r + this.ySpeed == piece[0]) ||
+                 (this.ySpeed == 1 && this.c == piece[1] && this.r + this.ySpeed == piece[0]) ||
+                 (this.xSpeed == -1 && this.r == piece[0] && this.c + this.xSpeed == piece[1]) ||
+                 (this.ySpeed == 1 && this.r == piece[0] && this.c + this.xSpeed == piece[1]) ){
+                return 1;
+            }            
+        }
+        return 0;
+    }
+
+    busyRight(){
+        if ( (this.ySpeed == -1 && this.c + 1 >= COLS) ||
+             (this.ySpeed == 1 && this.c - 1 < 0) ||
+             (this.xSpeed == -1 && this.r - 1 < 0) ||
+             (this.xSpeed == 1 && this.r + 1 >= ROWS) ){
+            return 1;
+        }
+
+        for (let piece of this.tail) {
+            if ( (this.ySpeed == -1 && this.r == piece[0] && this.c + 1 == piece[1]) ||
+                 (this.ySpeed == 1 && this.r == piece[0] && this.c - 1 == piece[1]) ||
+                 (this.xSpeed == -1 && this.c == piece[1] && this.r - 1 == piece[0]) ||
+                 (this.xSpeed == 1 && this.c == piece[1] && this.r + 1 == piece[0]) ){
+                return 1;
+            }            
+        }
+        return 0;
+    }
+
+    busyLeft(){
+        if ( (this.ySpeed == 1 && this.c + 1 >= COLS) ||
+             (this.ySpeed == -1 && this.c - 1 < 0) ||
+             (this.xSpeed == 1 && this.r - 1 < 0) ||
+             (this.xSpeed == -1 && this.r + 1 >= ROWS) ){
+            return 1;
+        }
+
+        for (let piece of this.tail) {
+            if ( (this.ySpeed == -1 && this.r == piece[0] && this.c - 1 == piece[1]) ||
+                 (this.ySpeed == 1 && this.r == piece[0] && this.c + 1 == piece[1]) ||
+                 (this.xSpeed == -1 && this.c == piece[1] && this.r + 1 == piece[0]) ||
+                 (this.xSpeed == 1 && this.c == piece[1] && this.r - 1 == piece[0]) ){
+                return 1;
+            }            
+        }
+
+        return 0;
+    }
+
+    foodAhead(){
+        if ( (this.ySpeed == -1 && this.board.food.c == this.c && this.board.food.r < this.r) ||
+             (this.ySpeed == 1 && this.board.food.c == this.c && this.board.food.r > this.r) ||
+             (this.xSpeed == -1 && this.board.food.r == this.r && this.board.food.c < this.c) ||
+             (this.xSpeed == 1 && this.board.food.r == this.r && this.board.food.c > this.c) ){
+            return 1;
+        }
+        return 0;        
+    }
+
+    foodRight(){
+        if ( (this.ySpeed == -1 && this.board.food.r == this.r && this.board.food.c > this.c) ||
+             (this.ySpeed == 1 && this.board.food.r == this.r && this.board.food.c < this.c) ||
+             (this.xSpeed == -1 && this.board.food.c == this.c && this.board.food.r < this.r) ||
+             (this.xSpeed == 1 && this.board.food.c == this.c && this.board.food.r > this.r) ){
+            return 1;
+        }
+        return 0;        
+    }
+
+    foodLeft(){
+        if ( (this.ySpeed == -1 && this.board.food.r == this.r && this.board.food.c < this.c) ||
+             (this.ySpeed == 1 && this.board.food.r == this.r && this.board.food.c > this.c) ||
+             (this.xSpeed == -1 && this.board.food.c == this.c && this.board.food.r > this.r) ||
+             (this.xSpeed == 1 && this.board.food.c == this.c && this.board.food.r < this.r) ){
+            return 1;
+        }
+        return 0;        
+    }

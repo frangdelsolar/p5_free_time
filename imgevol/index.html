@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Genetic Algorithm for Image Evolution</title>
+<script type="text/javascript" charset="utf-8" src="main.js"></script>
+</head>
+<body onload="load()">
+
+<div id="content-wrapper">
+
+<h1>Genetic Algorithm for Image Evolution</h1>
+
+
+<img id="orig_img" src="gioconda.jpg" style="display:none"/>
+
+<table border="0">
+  <tr>
+    <td>
+      <h3>Original</h3>
+      <canvas id="orig_img_canvas" width="205" height="246" style="border:0px dotted green; background: #000;"></canvas>
+    </td>
+    <td>
+      <h3>Best so far</h3>
+      <canvas id="best_img_canvas" width="205" height="246" style="border:0px dotted red; background: #000;"></canvas>
+    </td>
+    <td>
+      <h3>Evolving</h3>
+      <canvas id="test_img_canvas" width="205" height="246" style="border:0px dotted blue; background: #000;"></canvas>
+    </td>
+  </tr>
+</table>
+
+<div id="debug"></div>
+<div id="fitness"></div>
+<div id="chi"></div>
+<div id="ind"></div>
+<div id="polys"></div>
+
+</body>
+</html>
